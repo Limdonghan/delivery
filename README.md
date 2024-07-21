@@ -1,7 +1,7 @@
 # delivery
 
-Practice Delivery App with Flutter
-Flutterで出前アプリの練習
+Practice Delivery App with Flutter.
+Flutterで出前アプリの練習。
 
 ## Getting Started
 
