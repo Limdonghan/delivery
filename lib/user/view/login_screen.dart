@@ -7,7 +7,6 @@ import 'package:delivery/common/layout/default_layout.dart';
 import 'package:delivery/common/view/root_tab.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:delivery/common/const/data.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final storage = FlutterSecureStorage();
+    
     final dio = Dio();
     ///final simulatorIp = '127.0.0.1:3000';
     final ipAddress = '192.168.1.8:3000';  //갤럭시 IP
