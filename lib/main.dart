@@ -1,10 +1,10 @@
-import 'package:delivery/common/component/custom_text_from_field.dart';
+import 'package:delivery/common/view/splash_screen.dart';
 import 'package:delivery/user/view/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(
-    _App(),
+    _App()
   );
 }
 
@@ -19,7 +19,7 @@ class _App extends StatelessWidget {
         fontFamily: 'NotoSans', 
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: SplashScreen(),
     );
   }
 }

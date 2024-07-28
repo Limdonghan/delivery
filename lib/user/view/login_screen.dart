@@ -4,14 +4,26 @@ import 'dart:io';
 import 'package:delivery/common/component/custom_text_from_field.dart';
 import 'package:delivery/common/const/colors.dart';
 import 'package:delivery/common/layout/default_layout.dart';
+import 'package:delivery/common/view/root_tab.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:delivery/common/const/data.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String username = '';
+  String userPw = '';
+
+  @override
   Widget build(BuildContext context) {
+    final storage = FlutterSecureStorage();
     final dio = Dio();
     ///final simulatorIp = '127.0.0.1:3000';
     final ipAddress = '192.168.1.8:3000';  //갤럭시 IP
@@ -40,19 +52,21 @@ class LoginScreen extends StatelessWidget {
                   CustomTextFromField(
                     hintText: '이메일 !',
                     onChanged: (value) {
+                      username = value;
                     },
                   ),
                   SizedBox(height: 16.0),
                   CustomTextFromField(
                     hintText: '비밀번호 !',
                     onChanged: (value) {
+                      userPw = value;
                     },
                   ),
                   SizedBox(height: 16.0),
                   ElevatedButton(
                     onPressed: () async {
                       print('들어왔니?');
-                      //ID:PW
+                      //ID:PW  $username:$userPw
                       final rawString = 'test@codefactory.ai:testtest';
 
                       Codec<String, String> stringToBase64 = utf8.fuse(base64);
@@ -69,7 +83,19 @@ class LoginScreen extends StatelessWidget {
                         },
                       ),
                     );
-                    print(resp.data);
+                    final refreshToken = resp.data['refreshToken'];
+                    final accessToken = resp.data['accessToken'];
+
+                    await storage.write(key: REFRESS_TOKEN_KEY, value: refreshToken);
+                    await storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
+
+                    print('refresh : $refreshToken');
+                    print('access : $accessToken');
+                    
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => RootTab(),
+                      )
+                    );
                   }, 
                     style: ElevatedButton.styleFrom(
                       backgroundColor: PRIMARY_COLOR,
@@ -79,13 +105,22 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16.0),
                   TextButton(
-                    onPressed: () {
-                      
+                    onPressed: () async {
+                      final refreshToken = REFRESS_TOKEN_KEY;
+                      final resp = await dio.post('http://$ip/auth/token',
+                      options: Options(
+                        headers: {
+                          'authorization' : 'Bearer $refreshToken',
+                        },
+                      ),
+                    );
+                    print(resp.data);
                   }, 
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.black,
                   ),
-                  child: Text('회원가입'))
+                  child: Text('회원가입')
+                  )
                 ],
               ),
           ),
