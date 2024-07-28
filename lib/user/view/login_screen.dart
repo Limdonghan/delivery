@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:delivery/common/component/custom_text_from_field.dart';
 import 'package:delivery/common/const/colors.dart';
 import 'package:delivery/common/layout/default_layout.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -8,6 +12,13 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dio = Dio();
+    ///final simulatorIp = '127.0.0.1:3000';
+    final ipAddress = '192.168.1.8:3000';  //갤럭시 IP
+    //final ipAddress2 = '192.168.1.5:3000';  //갤럭시 IP
+
+    final ip = Platform.isAndroid ? ipAddress : '연결실패';
+
     return DefaultLayout(
       child: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -39,9 +50,27 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16.0),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      print('들어왔니?');
+                      //ID:PW
+                      final rawString = 'test@codefactory.ai:testtest';
+
+                      Codec<String, String> stringToBase64 = utf8.fuse(base64);
+
+                      String token = stringToBase64.encode(rawString);
+
+                      print("base64 : $token");
+                      print("ip : $ip");
                     
-                    }, 
+                    final resp = await dio.post('http://$ip/auth/login',
+                      options: Options(
+                        headers: {
+                          'authorization' : 'Basic $token',
+                        },
+                      ),
+                    );
+                    print(resp.data);
+                  }, 
                     style: ElevatedButton.styleFrom(
                       backgroundColor: PRIMARY_COLOR,
                       foregroundColor: Colors.white,
@@ -51,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 16.0),
                   TextButton(
                     onPressed: () {
-                    
+                      
                   }, 
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.black,
@@ -88,7 +117,7 @@ class _SubTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '이메일과 비밀번호를 입력해서 로그인 해주세요! \n 오늘도 선공적인 주문이 되길 :)',
+      '이메일과 비밀번호를 입력해서 로그인 해주세요! \n 오늘도 성공적인 주문이 되길 :)',
       style: TextStyle(
         fontSize: 16,
         color: BODY_TEXT_COLOR,
