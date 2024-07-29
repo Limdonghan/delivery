@@ -24,11 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     
     final dio = Dio();
-    ///final simulatorIp = '127.0.0.1:3000';
-    final ipAddress = '192.168.1.8:3000';  //갤럭시 IP
-    //final ipAddress2 = '192.168.1.5:3000';  //갤럭시 IP
 
-    final ip = Platform.isAndroid ? ipAddress : '연결실패';
 
     return DefaultLayout(
       child: SingleChildScrollView(
@@ -66,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () async {
                       print('들어왔니?');
                       //ID:PW  $username:$userPw
-                      final rawString = 'test@codefactory.ai:testtest';
+                      final rawString = 'test@test.com:1234';
 
                       Codec<String, String> stringToBase64 = utf8.fuse(base64);
 
@@ -105,15 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 16.0),
                   TextButton(
                     onPressed: () async {
-                      final refreshToken = REFRESS_TOKEN_KEY;
-                      final resp = await dio.post('http://$ip/auth/token',
-                      options: Options(
-                        headers: {
-                          'authorization' : 'Bearer $refreshToken',
-                        },
-                      ),
-                    );
-                    print(resp.data);
+                      
                   }, 
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.black,
