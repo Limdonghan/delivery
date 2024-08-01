@@ -20,14 +20,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     //deleteToken();
-    
+
     checkToken();
   }
 
@@ -36,55 +35,63 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkToken() async {
-
     //저장해놓은 키값 가져오기
     final refreshToken = await storage.read(key: REFRESS_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
     final dio = Dio();
     try {
-      final resp = await dio.post('http://$ip/auth/token',
-      options: Options(
-        headers: {'authorization' : 'Bearer $refreshToken',},
+      final resp = await dio.post(
+        'http://$ip/auth/token',
+        options: Options(
+          headers: {'authorization': 'Bearer $refreshToken'},
         ),
       );
+
+      await storage.write(
+          key: ACCESS_TOKEN_KEY, value: resp.data['accessToken']);
+
       //토큰이 널이면 로그인 페이지로, 아니면 메인페이지로
       Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => RootTab(),
+        MaterialPageRoute(
+          builder: (context) => RootTab(),
         ),
         (route) => false,
       );
     } catch (e) {
       Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => LoginScreen(),
-      ),
+        MaterialPageRoute(
+          builder: (context) => LoginScreen(),
+        ),
         (route) => false,
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
+    //시작 로딩 화면
     return DefaultLayout(
-      backgroundColor: PRIMARY_COLOR,
-      child: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'asset/img/logo/logo.png',
-                width: MediaQuery.of(context).size.width /2,
-              ),
-              const SizedBox(height: 16.0,),
-              CircularProgressIndicator(
-                color: Colors.white,
-              )
-            ],
+        backgroundColor: PRIMARY_COLOR,
+        child: Center(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'asset/img/logo/logo.png',
+                  width: MediaQuery.of(context).size.width / 2,
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                CircularProgressIndicator(
+                  color: Colors.white,
+                )
+              ],
+            ),
           ),
-        ),
-      )
-    );
+        ));
   }
 }
