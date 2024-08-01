@@ -1,29 +1,39 @@
 import 'package:delivery/common/const/colors.dart';
+import 'package:delivery/restaurant/model/restaurant_model.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantCart extends StatelessWidget {
+class RestaurantCard extends StatelessWidget {
   final Widget image;
   final String name;
   final List<String> tags;
-  final int ratingCount;
+  final int ratingsCount;
   final int deliveryTime;
   final int deliveryFee;
-  final double rating;
-  const RestaurantCart({
-    required this.image,
-    required this.name,
-    required this.tags,
-    required this.ratingCount,
-    required this.deliveryTime,
-    required this.deliveryFee,
-    required this.rating,
-    super.key
-    });
+  final double ratings;
+  const RestaurantCard(
+      {required this.image,
+      required this.name,
+      required this.tags,
+      required this.ratingsCount,
+      required this.deliveryTime,
+      required this.deliveryFee,
+      required this.ratings,
+      super.key});
 
+  factory RestaurantCard.fromModel({required RestaurantModel model}) {
+    return RestaurantCard(
+        image: Image.network(model.thumbUrl, fit: BoxFit.cover),
+        name: model.name,
+        tags: model.tags,
+        ratingsCount: model.ratignsCount,
+        deliveryTime: model.deliveryTime,
+        deliveryFee: model.deliveryFee,
+        ratings: model.ratigns);
+  }
   @override
   Widget build(BuildContext context) {
     //태그 앞에 # 붙이기
-    List<String> hashTags =  tags.map((e) => '#$e   ').toList();
+    List<String> hashTags = tags.map((e) => '#$e   ').toList();
     return Column(
       children: [
         ClipRRect(
@@ -53,13 +63,16 @@ class RestaurantCart extends StatelessWidget {
             const SizedBox(height: 8.0),
             Row(
               children: [
-                _IconText(icon: Icons.star, label: rating.toString()),
+                _IconText(icon: Icons.star, label: ratings.toString()),
                 renderDot(),
-                _IconText(icon: Icons.receipt, label: rating.toString()),
+                _IconText(icon: Icons.receipt, label: ratings.toString()),
                 renderDot(),
-                _IconText(icon: Icons.timelapse_outlined, label: '$deliveryTime 분'),
+                _IconText(
+                    icon: Icons.timelapse_outlined, label: '$deliveryTime 분'),
                 renderDot(),
-                _IconText(icon: Icons.monetization_on, label: deliveryFee == 0 ? '무료' : deliveryFee.toString()),
+                _IconText(
+                    icon: Icons.monetization_on,
+                    label: deliveryFee == 0 ? '무료' : deliveryFee.toString()),
               ],
             )
           ],
@@ -67,17 +80,16 @@ class RestaurantCart extends StatelessWidget {
       ],
     );
   }
-  Widget renderDot(){
+
+  Widget renderDot() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Text(
-        '・', 
-        style: TextStyle(
-          fontSize: 12.0, fontWeight: FontWeight.w500
-          ),
-        ),
-      );
-    }
+        '・',
+        style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
 }
 
 class _IconText extends StatelessWidget {

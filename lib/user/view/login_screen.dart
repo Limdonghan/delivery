@@ -22,9 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     final dio = Dio();
-
 
     return DefaultLayout(
       child: SingleChildScrollView(
@@ -36,29 +34,29 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _Title(),
-                  SizedBox(height: 16.0),
-                  _SubTitle(),
-                  Image.asset(
-                    'asset/img/misc/logo.png',
-                    width: MediaQuery.of(context).size.width /3 * 2,
-                  ),
-                  CustomTextFromField(
-                    hintText: '이메일 !',
-                    onChanged: (value) {
-                      username = value;
-                    },
-                  ),
-                  SizedBox(height: 16.0),
-                  CustomTextFromField(
-                    hintText: '비밀번호 !',
-                    onChanged: (value) {
-                      userPw = value;
-                    },
-                  ),
-                  SizedBox(height: 16.0),
-                  ElevatedButton(
+              children: [
+                _Title(),
+                SizedBox(height: 16.0),
+                _SubTitle(),
+                Image.asset(
+                  'asset/img/misc/logo.png',
+                  width: MediaQuery.of(context).size.width / 3 * 2,
+                ),
+                CustomTextFromField(
+                  hintText: '이메일 !',
+                  onChanged: (value) {
+                    username = value;
+                  },
+                ),
+                SizedBox(height: 16.0),
+                CustomTextFromField(
+                  hintText: '비밀번호 !',
+                  onChanged: (value) {
+                    userPw = value;
+                  },
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
                     onPressed: () async {
                       print('들어왔니?');
                       //ID:PW  $username:$userPw
@@ -70,46 +68,44 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       print("base64 : $token");
                       print("ip : $ip");
-                    
-                    final resp = await dio.post('http://$ip/auth/login',
-                      options: Options(
-                        headers: {
-                          'authorization' : 'Basic $token',
-                        },
-                      ),
-                    );
-                    final refreshToken = resp.data['refreshToken'];
-                    final accessToken = resp.data['accessToken'];
 
-                    await storage.write(key: REFRESS_TOKEN_KEY, value: refreshToken);
-                    await storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
+                      final resp = await dio.post(
+                        'http://$ip/auth/login',
+                        options: Options(
+                          headers: {
+                            'authorization': 'Basic $token',
+                          },
+                        ),
+                      );
+                      final refreshToken = resp.data['refreshToken'];
+                      final accessToken = resp.data['accessToken'];
 
-                    print('refresh : $refreshToken');
-                    print('access : $accessToken');
-                    
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => RootTab(),
-                      )
-                    );
-                  }, 
+                      await storage.write(
+                          key: REFRESS_TOKEN_KEY, value: refreshToken);
+                      await storage.write(
+                          key: ACCESS_TOKEN_KEY, value: accessToken);
+
+                      print('refresh : $refreshToken');
+                      print('access : $accessToken');
+
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => RootTab(),
+                      ));
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: PRIMARY_COLOR,
                       foregroundColor: Colors.white,
                     ),
-                  child: Text('로그인')
-                  ),
-                  SizedBox(height: 16.0),
-                  TextButton(
-                    onPressed: () async {
-                      
-                  }, 
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.black,
-                  ),
-                  child: Text('회원가입')
-                  )
-                ],
-              ),
+                    child: Text('로그인')),
+                SizedBox(height: 16.0),
+                TextButton(
+                    onPressed: () async {},
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.black,
+                    ),
+                    child: Text('회원가입'))
+              ],
+            ),
           ),
         ),
       ),
@@ -122,14 +118,12 @@ class _Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      '환영합니다.',
-      style: TextStyle(
-        fontSize: 34,
-        fontWeight: FontWeight.w500,
-        color: Colors.black,
-      )
-    );
+    return Text('환영합니다.',
+        style: TextStyle(
+          fontSize: 34,
+          fontWeight: FontWeight.w500,
+          color: Colors.black,
+        ));
   }
 }
 
