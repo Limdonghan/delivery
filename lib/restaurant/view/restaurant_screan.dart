@@ -5,6 +5,7 @@ import 'package:delivery/common/const/colors.dart';
 import 'package:delivery/common/const/data.dart';
 import 'package:delivery/restaurant/component/restaurant_card.dart';
 import 'package:delivery/restaurant/model/restaurant_model.dart';
+import 'package:delivery/restaurant/view/restaurant_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +53,13 @@ class RestaurantScrean extends StatelessWidget {
                     final item = snapshot.data![index];
                     //factory construcor를 사용한 데이터 모델링
                     final pItem = RestaurantModel.fromJson(json: item);
-                    return RestaurantCard.fromModel(model: pItem);
+                    return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => RestaurantDetailScreen(),
+                          ));
+                        },
+                        child: RestaurantCard.fromModel(model: pItem));
                   },
                   separatorBuilder: (context, index) {
                     return SizedBox(height: 16.0);

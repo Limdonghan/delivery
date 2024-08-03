@@ -58,15 +58,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 16.0),
                 ElevatedButton(
                     onPressed: () async {
-                      print('들어왔니?');
+                      // ignore: avoid_print
+                      print('login....');
                       //ID:PW  $username:$userPw
+                      // ignore: prefer_const_declarations
                       final rawString = 'test@test.com:1234';
 
                       Codec<String, String> stringToBase64 = utf8.fuse(base64);
 
                       String token = stringToBase64.encode(rawString);
 
+                      // ignore: avoid_print
                       print("base64 : $token");
+                      // ignore: avoid_print
                       print("ip : $ip");
 
                       final resp = await dio.post(
@@ -85,7 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       await storage.write(
                           key: ACCESS_TOKEN_KEY, value: accessToken);
 
+                      // ignore: avoid_print
                       print('refresh : $refreshToken');
+                      // ignore: avoid_print
                       print('access : $accessToken');
 
                       Navigator.of(context).push(MaterialPageRoute(
