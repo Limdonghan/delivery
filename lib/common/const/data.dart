@@ -9,7 +9,6 @@ const REFRESS_TOKEN_KEY = 'REFRESS_TOKEN';
 
 const storage = FlutterSecureStorage();
 
-// ignore: prefer_const_declarations
-final ipAddress = '192.168.1.6:3000'; //갤럭시 IP
+final ipAddress = 'My IP'; //갤럭시 IP
 
 final ip = Platform.isAndroid ? ipAddress : '연결실패';
