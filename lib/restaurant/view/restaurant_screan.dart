@@ -56,7 +56,9 @@ class RestaurantScrean extends StatelessWidget {
                     return GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => RestaurantDetailScreen(),
+                            builder: (context) => RestaurantDetailScreen(
+                              id: pItem.id,
+                            ),
                           ));
                         },
                         child: RestaurantCard.fromModel(model: pItem));
