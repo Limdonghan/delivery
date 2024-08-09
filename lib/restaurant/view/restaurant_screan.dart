@@ -14,7 +14,7 @@ class RestaurantScrean extends StatelessWidget {
 
 //future 로 왜 반환하는가> async로 함수를 선언했기 떄문
 //왜 async로 선언을 했냐 Http로 요청을 받을거기 떄문
-  Future<List> pagenatteRestaurant() async {
+  Future<List> paginateRestaurant() async {
     final dio = Dio();
 
     final token = await storage.read(key: ACCESS_TOKEN_KEY);
@@ -37,7 +37,7 @@ class RestaurantScrean extends StatelessWidget {
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: FutureBuilder<List>(
-              future: pagenatteRestaurant(),
+              future: paginateRestaurant(),
               builder: (context, AsyncSnapshot<List> snapshot) {
                 if (!snapshot.hasData) {
                   return CircularProgressIndicator(
@@ -52,7 +52,7 @@ class RestaurantScrean extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final item = snapshot.data![index];
                     //factory construcor를 사용한 데이터 모델링
-                    final pItem = RestaurantModel.fromJson(json: item);
+                    final pItem = RestaurantModel.fromJson(item);
                     return GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(

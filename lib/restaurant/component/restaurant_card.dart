@@ -36,10 +36,10 @@ class RestaurantCard extends StatelessWidget {
       image: Image.network(model.thumbUrl, fit: BoxFit.cover),
       name: model.name,
       tags: model.tags,
-      ratingsCount: model.ratignsCount,
+      ratingsCount: model.ratingsCount,
       deliveryTime: model.deliveryTime,
       deliveryFee: model.deliveryFee,
-      ratings: model.ratigns,
+      ratings: model.ratings,
       isDetail: isDetail,
       detail: model is RestaurantDetailModel ? model.detail : null,
     );
@@ -106,9 +106,10 @@ class RestaurantCard extends StatelessWidget {
     );
   }
 
+  // ・함수
   Widget renderDot() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 4.0),
       child: Text(
         '・',
         style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500),

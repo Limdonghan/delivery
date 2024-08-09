@@ -1,4 +1,6 @@
-import 'package:delivery/common/const/data.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:delivery/common/utils/data_utils.dart';
+part 'restaurant_model.g.dart';
 
 enum RestaurantPriceRange {
   expensive,
@@ -7,14 +9,16 @@ enum RestaurantPriceRange {
 }
 
 //RestaurantModel 인스턴스화
+@JsonSerializable()
 class RestaurantModel {
   final String id;
   final String name;
+  @JsonKey(fromJson: DataUtils.pathToUrl)
   final String thumbUrl;
   final List<String> tags;
   final RestaurantPriceRange priceRange;
-  final double ratigns;
-  final int ratignsCount;
+  final double ratings;
+  final int ratingsCount;
   final int deliveryTime;
   final int deliveryFee;
 
@@ -24,26 +28,16 @@ class RestaurantModel {
     required this.thumbUrl,
     required this.tags,
     required this.priceRange,
-    required this.ratigns,
-    required this.ratignsCount,
+    required this.ratings,
+    required this.ratingsCount,
     required this.deliveryTime,
     required this.deliveryFee,
   });
 
-//factory construcor를 사용해 데이터 모델링
-  factory RestaurantModel.fromJson({
-    required Map<String, dynamic> json,
-  }) {
-    return RestaurantModel(
-        id: json['id'],
-        name: json['name'],
-        thumbUrl: 'http://$ip${json['thumbUrl']}',
-        tags: List<String>.from(json['tags']),
-        priceRange: RestaurantPriceRange.values
-            .firstWhere((e) => e.name == json['priceRange']),
-        ratigns: json['ratings'],
-        ratignsCount: json['ratingsCount'],
-        deliveryTime: json['deliveryTime'],
-        deliveryFee: json['deliveryFee']);
-  }
+  //json -> 인스턴스 변환
+  factory RestaurantModel.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantModelFromJson(json);
+
+  //인스턴스 -> json 변환
+  Map<String, dynamic> toJson() => _$RestaurantModelToJson(this);
 }
