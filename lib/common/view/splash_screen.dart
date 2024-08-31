@@ -26,7 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     //deleteToken();
-
     checkToken();
   }
 
@@ -36,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void checkToken() async {
     //저장해놓은 키값 가져오기
-    final refreshToken = await storage.read(key: REFRESS_TOKEN_KEY);
+    final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
     final dio = Dio();
