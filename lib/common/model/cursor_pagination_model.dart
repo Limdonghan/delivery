@@ -9,6 +9,7 @@ abstract class CursorPaginationBase {}
 )
 class CursorPagination<T> extends CursorPaginationBase {
   final CursorPaginationMeta meta;
+  // cpData = CursorPaginationData
   final List<T> data;
 
   CursorPagination({

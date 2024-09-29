@@ -1,3 +1,4 @@
+import 'package:delivery/common/model/cursor_pagination_model.dart';
 import 'package:delivery/restaurant/component/restaurant_card.dart';
 import 'package:delivery/restaurant/provider/restaurant_provider.dart';
 import 'package:delivery/restaurant/view/restaurant_detail_screen.dart';
@@ -9,20 +10,30 @@ class RestaurantScrean extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final restaurantProviderData = ref.watch(restaurantProvider);
+    // restProvData = restaurantProviderData
+    final restProvData = ref.watch(restaurantProvider);
 
-    if (restaurantProviderData.length == 0) {
+    if (restProvData is CursorPaginationLoading) {
       return Center(
         child: CircularProgressIndicator(),
       );
     }
 
+    if (restProvData is CursorPaginationError) {
+      return Center(
+        child: Text(restProvData.errMessage),
+      );
+    }
+
+    // cp = CursorPagination의 약자
+    final cp = restProvData as CursorPagination;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ListView.separated(
-        itemCount: restaurantProviderData.length,
+        itemCount: cp.data.length,
         itemBuilder: (context, index) {
-          final pItem = restaurantProviderData[index];
+          final pItem = cp.data[index];
           //factory construcor를 사용한 데이터 모델링
           //final pItem = RestaurantModel.fromJson(item);
           return GestureDetector(

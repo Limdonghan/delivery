@@ -1,31 +1,31 @@
 import 'package:delivery/common/model/cursor_pagination_model.dart';
-import 'package:delivery/restaurant/model/restaurant_model.dart';
 import 'package:delivery/restaurant/repository/restaurant_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final restaurantProvider =
-    StateNotifierProvider<RestaurantStateNotifier, List<RestaurantModel>>(
+    StateNotifierProvider<RestaurantStateNotifier, CursorPaginationBase>(
   (ref) {
     final respository = ref.watch(restaurantRespositoryProvider);
 
-    final notifier = RestaurantStateNotifier(respository);
+    final notifier =
+        RestaurantStateNotifier(restaurantRespository: respository);
 
     return notifier;
   },
 );
 
-class RestaurantStateNotifier extends StateNotifier<CursorPagination> {
-  final RestaurantRepository respository;
+class RestaurantStateNotifier extends StateNotifier<CursorPaginationBase> {
+  final RestaurantRepository restaurantRespository;
 
-  RestaurantStateNotifier(
-    this.respository,
-  ) : super(CursorPagination(meta: meta, data: data)) {
+  RestaurantStateNotifier({
+    required this.restaurantRespository,
+  }) : super(CursorPaginationLoading()) {
     paginate();
   }
 
   paginate() async {
-    final resp = await respository.paginate();
+    final resp = await restaurantRespository.paginate();
 
-    state = resp.data;
+    state = resp;
   }
 }

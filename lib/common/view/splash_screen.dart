@@ -7,7 +7,7 @@
 import 'package:delivery/common/const/colors.dart';
 import 'package:delivery/common/const/data.dart';
 import 'package:delivery/common/layout/default_layout.dart';
-import 'package:delivery/common/secure_storage/secure_storage..dart';
+import 'package:delivery/common/secure_storage/secure_storage.dart';
 import 'package:delivery/common/view/root_tab.dart';
 import 'package:delivery/user/view/login_screen.dart';
 import 'package:dio/dio.dart';

@@ -1,5 +1,5 @@
 import 'package:delivery/common/const/data.dart';
-import 'package:delivery/common/secure_storage/secure_storage..dart';
+import 'package:delivery/common/secure_storage/secure_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
