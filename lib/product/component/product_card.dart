@@ -7,21 +7,23 @@ class ProductCard extends StatelessWidget {
   final String name;
   final String detail;
   final int price;
-  const ProductCard(
-      {super.key,
-      required this.imgae,
-      required this.name,
-      required this.detail,
-      required this.price});
+  const ProductCard({
+    super.key,
+    required this.imgae,
+    required this.name,
+    required this.detail,
+    required this.price,
+  });
 
   factory ProductCard.fromModel({
     required RestaurantProductModel model,
   }) {
     return ProductCard(
-        imgae: Image.network(model.imgUrl, width: 110, height: 110),
-        name: model.name,
-        detail: model.detail,
-        price: model.price);
+      imgae: Image.network(model.imgUrl, width: 110, height: 110),
+      name: model.name,
+      detail: model.detail,
+      price: model.price,
+    );
   }
 
   @override
@@ -38,34 +40,36 @@ class ProductCard extends StatelessWidget {
             width: 16.0,
           ),
           Expanded(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                name,
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-              ),
-              Text(
-                detail,
-                // 최대 글자수를 지나가면 ... 표시
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                style: TextStyle(
-                  color: BODY_TEXT_COLOR,
-                  fontSize: 14.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
-              ),
-              Text(
-                '$price 원',
-                textAlign: TextAlign.right,
-                style: TextStyle(
+                Text(
+                  detail,
+                  // 최대 글자수를 지나가면 ... 표시
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: TextStyle(
+                    color: BODY_TEXT_COLOR,
+                    fontSize: 14.0,
+                  ),
+                ),
+                Text(
+                  '$price 원',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
                     color: PRIMARY_COLOR,
                     fontSize: 12.0,
-                    fontWeight: FontWeight.w500),
-              )
-            ],
-          ))
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );

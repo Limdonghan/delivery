@@ -75,26 +75,27 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   Widget build(BuildContext context) {
     //시작 로딩 화면
     return DefaultLayout(
-        backgroundColor: PRIMARY_COLOR,
-        child: Center(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'asset/img/logo/logo.png',
-                  width: MediaQuery.of(context).size.width / 2,
-                ),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                CircularProgressIndicator(
-                  color: Colors.white,
-                )
-              ],
-            ),
+      backgroundColor: PRIMARY_COLOR,
+      child: Center(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'asset/img/logo/logo.png',
+                width: MediaQuery.of(context).size.width / 2,
+              ),
+              const SizedBox(
+                height: 16.0,
+              ),
+              CircularProgressIndicator(
+                color: Colors.white,
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
