@@ -1,14 +1,13 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:delivery/common/component/custom_text_from_field.dart';
 import 'package:delivery/common/const/colors.dart';
+import 'package:delivery/common/const/data.dart';
 import 'package:delivery/common/layout/default_layout.dart';
 import 'package:delivery/common/secure_storage/secure_storage..dart';
 import 'package:delivery/common/view/root_tab.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:delivery/common/const/data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {

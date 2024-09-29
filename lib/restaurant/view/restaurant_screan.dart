@@ -1,12 +1,9 @@
 import 'package:delivery/common/const/colors.dart';
-import 'package:delivery/common/const/data.dart';
-import 'package:delivery/common/dio/dio.dart';
 import 'package:delivery/common/model/cursor_pagination_model.dart';
 import 'package:delivery/restaurant/component/restaurant_card.dart';
 import 'package:delivery/restaurant/model/restaurant_model.dart';
 import 'package:delivery/restaurant/repository/restaurant_repository.dart';
 import 'package:delivery/restaurant/view/restaurant_detail_screen.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
