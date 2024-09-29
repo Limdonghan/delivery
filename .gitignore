@@ -15,6 +15,7 @@ macos/
 linux/
 windows/
 asset/
+lib/common/const/data.dart
 
 # IntelliJ related
 *.iml
