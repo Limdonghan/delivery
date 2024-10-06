@@ -59,45 +59,54 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 SizedBox(height: 16.0),
                 ElevatedButton(
                     onPressed: () async {
-                      // ignore: avoid_print
-                      print('login....');
-                      //ID:PW  $username:$userPw
-                      // ignore: prefer_const_declarations
-                      final rawString = 'test@test.com:1234';
+                      try {
+                        // ignore: avoid_print
+                        print('login....');
+                        //ID:PW  $username:$userPw
+                        // ignore: prefer_const_declarations
+                        final rawString = 'test@test.com:1234';
 
-                      Codec<String, String> stringToBase64 = utf8.fuse(base64);
+                        Codec<String, String> stringToBase64 =
+                            utf8.fuse(base64);
 
-                      String token = stringToBase64.encode(rawString);
+                        String token = stringToBase64.encode(rawString);
 
-                      // ignore: avoid_print
-                      print("base64 : $token");
-                      // ignore: avoid_print
-                      print("ip : $ip");
+                        // ignore: avoid_print
+                        print("base64 : $token");
+                        // ignore: avoid_print
+                        print("ip : $ip");
 
-                      final resp = await dio.post(
-                        'http://$ip/auth/login',
-                        options: Options(
-                          headers: {
-                            'authorization': 'Basic $token',
-                          },
-                        ),
-                      );
-                      final refreshToken = resp.data['refreshToken'];
-                      final accessToken = resp.data['accessToken'];
-                      final storage = ref.read(secureStorageProvider);
-                      await storage.write(
-                          key: REFRESH_TOKEN_KEY, value: refreshToken);
-                      await storage.write(
-                          key: ACCESS_TOKEN_KEY, value: accessToken);
+                        final resp = await dio.post(
+                          'http://$ip/auth/login',
+                          options: Options(
+                            headers: {
+                              'authorization': 'Basic $token',
+                            },
+                          ),
+                        );
+                        final refreshToken = resp.data['refreshToken'];
+                        final accessToken = resp.data['accessToken'];
 
-                      // ignore: avoid_print
-                      print('refresh : $refreshToken');
-                      // ignore: avoid_print
-                      print('access : $accessToken');
+                        final storage = ref.read(secureStorageProvider);
 
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => RootTab(),
-                      ));
+                        await storage.write(
+                            key: REFRESH_TOKEN_KEY, value: refreshToken);
+                        await storage.write(
+                            key: ACCESS_TOKEN_KEY, value: accessToken);
+
+                        // ignore: avoid_print
+                        print('refresh : $refreshToken');
+                        // ignore: avoid_print
+                        print('access : $accessToken');
+
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => RootTab(),
+                          ),
+                        );
+                      } catch (e) {
+                        print(e);
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: PRIMARY_COLOR,
